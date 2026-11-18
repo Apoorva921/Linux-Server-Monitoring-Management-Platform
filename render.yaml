@@ -1,0 +1,34 @@
+databases:
+  - name: sentinelops-db
+    plan: free
+    databaseName: sentinelops
+    user: sentinelops
+
+services:
+  - type: web
+    name: sentinelops
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sentinelops-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ENVIRONMENT
+        value: production
+      - key: SERVE_STATIC_FRONTEND
+        value: "true"
+      - key: DEMO_MODE
+        value: "true"
+      - key: INITIAL_ADMIN_USERNAME
+        value: admin
+      - key: INITIAL_ADMIN_EMAIL
+        value: admin@sentinelops.io
+      - key: INITIAL_ADMIN_PASSWORD
+        value: Admin@SentinelOps123!
+      - key: CORS_ORIGINS
+        value: "*"
