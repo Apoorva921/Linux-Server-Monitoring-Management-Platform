@@ -32,3 +32,4 @@ services:
         value: Admin@SentinelOps123!
       - key: CORS_ORIGINS
         value: "*"
+
